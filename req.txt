@@ -1,0 +1,2 @@
+hyperSel>=3.11
+customtkinter
