@@ -106,7 +106,7 @@ class App(ctk.CTk):
                 seen_urls.add(url)
         return unique_data
 
-    def apply_filters(self):
+    def apply_filters(self, _=None):
         """Apply filters based on user-selected criteria."""
         year_threshold = int(self.year_var.get())
         self.filtered_data = [
@@ -164,7 +164,7 @@ class App(ctk.CTk):
 
             # Clickable URL
             url = entry.get('url', 'N/A')
-            url_label = ctk.CTkLabel(entry_frame, text=f"Link", font=("Arial", 12), fg_color="blue")
+            url_label = ctk.CTkLabel(entry_frame, text="Link", font=("Arial", 12), fg_color="blue")
             url_label.grid(row=2, column=0, columnspan=3, padx=10, pady=5, sticky="w")
             url_label.bind("<Button-1>", lambda e, url=url: webbrowser.open(url))
 

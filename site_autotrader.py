@@ -1,26 +1,11 @@
-#WE START HERE
+# WE START HERE
 import hyperSel
 import hyperSel.data_utiliites
 import hyperSel.log_utilities
 import hyperSel.selenium_utilities
-import helpers
 import math
 import time
 import re
-
-def get_canadian_postals():
-    postals = []
-    for i in helpers.load_canadian_cities():
-        postal_codes = i['postal']
-        for prefix  in postal_codes:
-            # print(postal_codes)
-            suffixes = ["1A1", "2B2", "3C3"]
-            for suffix in suffixes:
-                combo = f"{prefix} {suffix}"
-                postals.append(combo)
-
-    canadian_postals = print(len(postals))
-    return list(set(canadian_postals))
 
 def get_num_listings(driver):
     soup = hyperSel.selenium_utilities.get_driver_soup(driver)
@@ -42,10 +27,9 @@ def calculate_loops(total_items, items_per_page):
 def all_canadian_teslas():
     all_canada_url_template = 'https://www.autotrader.ca/cars/tesla/on/toronto/?rcp=100&rcs=@offset&srt=35&prx=100&prv=Ontario&loc=M54A9&hprc=True&wcp=True&sts=New-Used&inMarket=basicSearch'
     all_canada_url = 'https://www.autotrader.ca/cars/tesla/on/toronto/?rcp=15&rcs=0&srt=35&prx=100&prv=Ontario&loc=M54A9&hprc=True&wcp=True&sts=New-Used&inMarket=basicSearch'
-    driver = hyperSel.selenium_utilities.open_site_selenium(all_canada_url, True)
+    driver = hyperSel.selenium_utilities.open_site_selenium(all_canada_url, False)
     hyperSel.selenium_utilities.maximize_the_window(driver)
    
-
     # LOOPING
     items_per_page = 100
     num_listings = get_num_listings(driver)
@@ -79,24 +63,6 @@ def extract_numbers(text):
     # Extract all parts of the number and join them
     match = ''.join(re.findall(r'\d+\.?\d*', text))
     return match
-
-def run_tests():
-    tests = [
-        ("$123,923", "123923"),
-        ("$92.23", "92.23"),
-        ("51,988", "51988"),
-        ("123,456.78", "123456.78"),
-        ("42", "42"),
-        ("$0.99", "0.99"),
-        ("10,000,000", "10000000"),
-        ("7.50", "7.50"),
-    ]
-    
-    for text, expected in tests:
-        result = extract_numbers(text)
-        assert result == expected, f"Failed for '{text}': expected {expected}, got {result}"
-        print(f"Passed for '{text}': {result}")
-
 
 def extract_year(title):
     # Regular expression to find the first four-digit year in the title
