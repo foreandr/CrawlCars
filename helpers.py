@@ -67,3 +67,71 @@ def load_canadian_cities():
             })
     
     return canadian_cities
+
+def should_log(title):
+    """
+    Determines whether a given title meets the criteria for logging.
+
+    Criteria:
+    - Must contain the phrase "long range" (case-insensitive).
+    - Must contain any expression related to self-driving (case-insensitive).
+
+    Args:
+        title (str): The title to evaluate.
+
+    Returns:
+        bool: True if the title meets the criteria, False otherwise.
+    """
+    # Ensure the title is a string
+    if not isinstance(title, str):
+        return False
+
+    # Convert the title to lowercase once for case-insensitive comparison
+    title_lower = title.lower()
+
+    # Required keyword
+    required_keyword = "long range"
+
+    # Expanded list of optional keywords related to self-driving
+    optional_keywords = [
+        "fsd",                        # Full Self-Driving
+        "full self-driving",
+        "self driving",
+        "autopilot",
+        "driver assist",
+        "semi-autonomous",
+        "autonomous driving",
+        "advanced driver assistance", # ADAS
+        "adas",
+        "level 2 autonomy",
+        "level 3 autonomy",
+        "level 4 autonomy",
+        "robotaxi",
+        "hands-free driving",
+        "smart summon",
+        "autonomous",
+        "self-driving capability",
+        "automated driving",
+        "driverless",
+        "l2",                         # Level 2
+        "l3",                         # Level 3
+        "l4",                         # Level 4
+        "auto pilot",                 # Alternative spelling
+        "drive assist",
+        "smart driving",
+        "auto-assisted driving",
+        "automated assistance",
+        "self-driving system",
+        "autonomous system",
+        "hands free driving",         # Alternative spacing
+        "handsfree driving",          # Alternative spelling
+    ]
+
+    # Check for the presence of the required keyword
+    has_required = required_keyword in title_lower
+
+    # Check for the presence of any optional keywords
+    has_optional = any(keyword in title_lower for keyword in optional_keywords)
+
+    # Return True only if both conditions are met
+    return has_required and has_optional

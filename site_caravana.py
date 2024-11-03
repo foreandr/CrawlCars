@@ -94,7 +94,11 @@ def do_single_car(browser, url):
     soup = hyperSel.nodriver_utilities.get_site_soup(browser, url, wait=1)
     data = extract_data_from_soup(soup)
     data["url"] = url
-    hyperSel.log_utilities.log_data(data)
+    if helpers.should_log(data['title']):
+        print("LOGGING ONE")
+        hyperSel.log_utilities.log_data(data)
+    else:
+        print("DIDNT HIT CRITERION")
 
 def extract_data_from_soup(soup):
     """
