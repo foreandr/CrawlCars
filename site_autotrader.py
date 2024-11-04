@@ -36,9 +36,9 @@ def calculate_loops(total_items, items_per_page):
         return 0 
 
 def all_canadian_teslas():
-    all_canada_url_template = 'https://www.autotrader.ca/cars/tesla/on/toronto/?rcp=100&rcs=@offset&srt=35&prx=100&prv=Ontario&loc=M54A9&hprc=True&wcp=True&sts=New-Used&inMarket=basicSearch'
-    all_canada_url = 'https://www.autotrader.ca/cars/tesla/on/toronto/?rcp=15&rcs=0&srt=35&prx=100&prv=Ontario&loc=M54A9&hprc=True&wcp=True&sts=New-Used&inMarket=basicSearch'
-    driver = hyperSel.selenium_utilities.open_site_selenium(all_canada_url, False)
+    all_canada_url_template = 'https://www.autotrader.ca/cars/tesla/on/toronto/?rcp=100&rcs=@offset&srt=35&prx=100&prv=Ontario&kwd=autopilot&loc=M54A9&hprc=True&wcp=True&sts=New-Used&inMarket=basicSearch'
+    all_canada_url = 'https://www.autotrader.ca/cars/tesla/on/toronto/?rcp=15&rcs=0&srt=35&prx=100&prv=Ontario&kwd=autopilot&loc=M54A9&hprc=True&wcp=True&sts=New-Used&inMarket=basicSearch'
+    driver = hyperSel.selenium_utilities.open_site_selenium(all_canada_url, True)
     hyperSel.selenium_utilities.maximize_the_window(driver)
    
     # LOOPING
@@ -143,8 +143,8 @@ def main():
 
 def all_american_teslas():
     print("all_american_teslas")
-    all_us_url = '''https://www.autotrader.com/cars-for-sale/all-cars/tesla/model-x/los-angeles-ca?newSearch=true&searchRadius=0'''
-    iter_template_url ='https://www.autotrader.com/cars-for-sale/all-cars/tesla/model-x/los-angeles-ca?firstRecord=@PAGINATION&newSearch=true&searchRadius=0'
+    all_us_url = '''https://www.autotrader.com/cars-for-sale/all-cars/tesla/model-x/los-angeles-ca?keywordPhrases=self%20driving&newSearch=true&searchRadius=0&zip=90012'''
+    iter_template_url ='https://www.autotrader.com/cars-for-sale/all-cars/tesla/model-x/los-angeles-ca?firstRecord=@PAGINATION&keywordPhrases=self%20driving&newSearch=false&searchRadius=0'
     # driver = hyperSel.selenium_utilities.open_site_selenium(all_us_url, True)
     browser = hyperSel.nodriver_utilities.open_browser()
     # hyperSel.nodriver_utilities.go_to_site(browser, all_us_url)
@@ -235,7 +235,7 @@ def extract_all_hrefs(soup):
     return hrefs
 
 if __name__ == '__main__':
-   all_american_teslas()
-   
+    #all_american_teslas()
+    # all_canadian_teslas()
 
-   # main()
+    main()

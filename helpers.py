@@ -68,32 +68,48 @@ def load_canadian_cities():
     
     return canadian_cities
 
+def extract_year(title):
+    # Regular expression to find the first four-digit year in the title
+    match = re.search(r'\b\d{4}\b', title)
+    return match.group(0) if match else None  # Return the year or None if no match
+
 def should_log(title):
     """
     Determines whether a given title meets the criteria for logging.
 
     Criteria:
-    - Must contain the phrase "long range" (case-insensitive).
-    - Must contain any expression related to self-driving (case-insensitive).
+    - Must contain any of the specified keywords (case-insensitive).
 
     Args:
         title (str): The title to evaluate.
 
     Returns:
-        bool: True if the title meets the criteria, False otherwise.
+        bool: True if the title contains any of the keywords, False otherwise.
     """
     # Ensure the title is a string
     if not isinstance(title, str):
         return False
 
-    # Convert the title to lowercase once for case-insensitive comparison
+    # Convert the title to lowercase for case-insensitive comparison
     title_lower = title.lower()
+    year = extract_year(title)
 
-    # Required keyword
-    required_keyword = "long range"
-
-    # Expanded list of optional keywords related to self-driving
-    optional_keywords = [
+    try:
+        if int(year) < 2021:
+            return False
+    except:
+        pass
+    
+    # Combined list of all keywords related to "long range" and "self-driving"
+    keywords = [
+        # Long Range Keywords
+        "long range",
+        "extended range",
+        "high mileage",
+        "ultra range",
+        "super range",  # Add more as needed
+        "plaid", # plaid trim
+        # Self-Driving Keywords
         "fsd",                        # Full Self-Driving
         "full self-driving",
         "self driving",
@@ -125,13 +141,13 @@ def should_log(title):
         "autonomous system",
         "hands free driving",         # Alternative spacing
         "handsfree driving",          # Alternative spelling
+        "smart driving",              # Added for comprehensiveness
+        "drive assist",
+        "automated assistance",
+        "self-driving system",
+        "autonomous system",
+        # Add more keywords as needed
     ]
 
-    # Check for the presence of the required keyword
-    has_required = required_keyword in title_lower
-
-    # Check for the presence of any optional keywords
-    has_optional = any(keyword in title_lower for keyword in optional_keywords)
-
-    # Return True only if both conditions are met
-    return has_required and has_optional
+    # Check if any keyword is present in the title
+    return any(keyword in title_lower for keyword in keywords)
